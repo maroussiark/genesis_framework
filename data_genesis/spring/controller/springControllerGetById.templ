@@ -1,0 +1,4 @@
+public ResponseWrap<[classNameMaj]> getById(@PathVariable [primaryType] [primaryNameMin]){
+     return repo.findById(id).map(obj -> ResponseWrap.success(obj))
+                .orElseGet(() -> ResponseWrap.error("Objet non trouvee"));
+}
