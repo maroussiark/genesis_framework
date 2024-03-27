@@ -1,4 +1,4 @@
-public ResponseWrap<String> delete(@PathVariable [primaryType] [primaryNameMin]){
+public ResponseEntity<?> delete(@PathVariable [primaryType] [primaryNameMin]){
     repo.deleteById([primaryNameMin]);
-    return ResponseWrap.success("deleted successfully");
+    return ResponseEntity.ok().build();
 }

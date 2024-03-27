@@ -1,0 +1,5 @@
+<ion-item>
+    <ion-label for="[fieldNameMin]">[fieldNameFormattedMaj]
+    </ion-label> 
+       <ion-input type="date-time" placeholder="Sélectionner une date et une heure" cFormControl id="[fieldNameMin]" [(ngModel)]="formData.[fieldNameMin]" name="[fieldNameMin]"> </ion-input>
+</ion-item>

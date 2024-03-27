@@ -1,9 +1,8 @@
-public ResponseWrap<[classNameMaj]> update([controllerMethodParameter],@PathVariable [primaryType] [primaryNameMin]){
+public ResponseEntity<[classNameMaj]> update([controllerMethodParameter],@PathVariable [primaryType] [primaryNameMin]){
     if (repo.existsById([primaryNameMin])) {
         obj.set[primaryNameMaj]([primaryNameMin]);    
-        return ResponseWrap.success(repo.save(obj));
+        return new ResponseEntity<>(repo.save(obj),HttpStatus.OK);
     }else {
-            return ResponseWrap.error("objet n'existe pas");
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
-
 }

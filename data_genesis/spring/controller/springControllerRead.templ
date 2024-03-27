@@ -1,3 +1,4 @@
-public ResponseWrap<Iterable<[classNameMaj]>> getAll() {
-        return ResponseWrap.success(repo.findAll());
+public ResponseEntity<Iterable<[classNameMaj]>> getAll() {
+        Iterable<[classNameMaj]> objs = repo.findAll();
+        return new ResponseEntity<>(objs , HttpStatus.OK);
 }

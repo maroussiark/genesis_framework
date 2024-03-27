@@ -1,0 +1,28 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Formulaire</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+
+<ion-button (click)="navigateTo('[classNameMin]-list')" color="danger">Retour</ion-button>
+
+<ion-card class="mb-4" class="mt-4">
+    <ion-card-header>
+      <ion-title>Formulaire de modification</ion-title>
+    </ion-card-header>
+    <ion-card-content>
+    <ion-list>
+        <form (ngSubmit)="update[classNameMaj]()" #myForm="ngForm">
+            [viewUpdateFormField]
+            <ion-input type="hidden" [(ngModel)]="formData.[primaryNameMin]" name="[primaryNameMin]"></ion-input>
+            
+            <ion-button expand="full" type="submit">Valider</ion-button>
+            
+        </form>
+      </ion-list>
+    </ion-card-content>
+</ion-card>
+
+</ion-content>

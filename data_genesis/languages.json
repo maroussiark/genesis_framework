@@ -22,6 +22,7 @@
             "java.time.LocalDateTime":"java.time.LocalDateTime.parse([value])"
         },
         "skeleton":"springpsql_skeleton",
+        "view_directory": "view.zip",
         "projectNameTags":[
             "[projectNameMaj]/settings.gradle",
             "[projectNameMaj]/src/main/resources/templates/layout/layout.html",
@@ -78,7 +79,9 @@
                 "import org.springframework.web.bind.annotation.RequestBody;",
                 "import com.[projectNameMin].entities.[classNameMaj];",
                 "import com.[projectNameMin].entities.[classNameMaj]Repository;",
-                "import com.modele.ResponseWrap;"
+                "import org.springframework.http.HttpStatus;",
+                "import org.springframework.http.ResponseEntity;",
+                "import java.util.Optional;"
             ],
             "controllerAnnotations":[
                 "@RestController",
@@ -163,29 +166,109 @@
         },
         "view":{
             "viewForeignList":"",
-            "viewTableHeader":"<th scope=\"col\">[fieldNameFormattedMaj]</th>",
-            "foreignFieldGet":".label",
-            "viewTableLine":"<td th:text=\"${e.get[fieldNameMaj]()[foreignFieldGet]}\"></td>",
-            "viewUpdateFormForeignField":"spring/view/components/springViewUpdateForeign",
+            "viewTableHeader":"<ion-col size=\"3\">[fieldNameFormattedMaj]</ion-col>",
+            "foreignFieldGet":"nom",
+            "viewTableLine":"<ion-col size=\"3\">{{[classNameMin].[fieldNameMin]}}</ion-col>",
+            "viewTableLineForeign": "<ion-col size=\"3\">{{[classNameMin].[fieldNameMin].[foreignFieldGet]}}</ion-col>",
+            "viewUpdateFormForeignField":"flamework/view/components/flameworkViewUpdateForeign",
             "viewUpdateFormField":{
-                "Integer":"spring/view/components/springViewUpdateInt",
-                "Double":"spring/view/components/springViewUpdateDouble",
-                "String":"spring/view/components/springViewUpdateString",
-                "java.time.LocalDate":"spring/view/components/springViewUpdateDate",
-                "java.time.LocalDateTime":"spring/view/components/springViewUpdateTimestamp"
+                "Integer":"flamework/view/components/flameworkViewUpdateInt",
+                "Double":"flamework/view/components/flameworkViewUpdateDouble",
+                "String":"flamework/view/components/flameworkViewUpdateString",
+                "java.time.LocalDate":"flamework/view/components/flameworkViewUpdateDate",
+                "java.time.LocalDateTime":"flamework/view/components/flameworkViewUpdateTimestamp"
             },
-            "viewInsertFormForeignField":"spring/view/components/springViewInsertForeign",
+            "viewInsertFormForeignField":"flamework/view/components/flameworkViewInsertForeign",
             "viewInsertFormField":{
-                "Integer":"spring/view/components/springViewInsertInt",
-                "Double":"spring/view/components/springViewInsertDouble",
-                "String":"spring/view/components/springViewInsertString",
-                "java.time.LocalDate":"spring/view/components/springViewInsertDate",
-                "java.time.LocalDateTime":"spring/view/components/springViewInsertTimestamp"
+                "Integer":"flamework/view/components/flameworkViewInsertInt",
+                "Double":"flamework/view/components/flameworkViewInsertDouble",
+                "String":"flamework/view/components/flameworkViewInsertString",
+                "java.time.LocalDate":"flamework/view/components/flameworkViewInsertDate",
+                "java.time.LocalDateTime":"flamework/view/components/flameworkViewInsertTimestamp"
             },
-            "viewName":"[classNameMin]",
-            "viewContent":"spring/view/springView",
-            "viewSavePath":"[projectNameMaj]/src/main/resources/templates",
+            "viewName":{
+                "liste":"[classNameMin]-list.page",
+                "modifier":"[classNameMin]-update.page",
+                "form":"[classNameMin]-form.page"
+            },
+            "viewContent": {
+                "liste": "flamework/view/flameworkViewListe",
+                "modifier": "flamework/view/page_html/flameworkViewModifier",
+                "form": "flamework/view/page_html/frameworkViewInsert"
+            },
+            "viewSavePath": {
+                "liste": "angular/[projectNameMaj]/src/app/[classNameMin]/[classNameMin]-list",
+                "modifier": "angular/[projectNameMaj]/src/app/[classNameMin]/[classNameMin]-update",
+                "form": "angular/[projectNameMaj]/src/app/[classNameMin]/[classNameMin]-form"
+            },
             "viewExtension":"html"
+        },
+        "service":{
+            "serviceSavePath":"angular/[projectName]/src/app/services",
+            "serviceName":"[classNameMin].service",
+            "serviceExtension":"ts",
+            "specName":"[classNameMin].service.spec",
+            "specContent":"spring/view/services/flamework.service.spec.ts.templ",
+            "serviceContent":"spring/view/services/flamework.service.ts.templ"
+        },
+        "componentService": {
+            "formData": "[fieldNameMin]: null,",
+            "formDataUpdate": "this.formData.[fieldNameMin] = this.[classNameMin] ? this.[classNameMin].[fieldNameMin] : null;",
+            "foreignList": "[foreignNameMin]s: any = [];",
+            "componentServiceName": {
+                "liste": "[classNameMin]-list.page",
+                "modifier": "[classNameMin]-update.page",
+                "form": "[classNameMin]-form.page",
+                "delete": "[classNameMin]-delete.page"
+            },
+            "componentServiceContent": {
+                "liste": "flamework/view/page_ts/flameworkComponentListe",
+                "modifier": "flamework/view/page_ts/flameworkComponentModifier",
+                "form": "flamework/view/page_ts/flameworkComponentInsert"
+            },
+            "componentServiceSavePath": {
+                "liste": "angular/[projectNameMaj]/src/app/[classNameMin]/[classNameMin]-list",
+                "modifier": "angular/[projectNameMaj]/src/app/[classNameMin]/[classNameMin]-update",
+                "form": "angular/[projectNameMaj]/src/app/[classNameMin]/[classNameMin]-form",
+                "delete": "angular/[projectNameMaj]/src/app/[classNameMin]/[classNameMin]-delete"
+            },
+            "specName": {
+                "liste": "[classNameMin]-list.page.spec",
+                "modifier": "[classNameMin]-update.page.spec",
+                "form": "[classNameMin]-form.page.spec"
+            },
+            "specContent": {
+                "liste": "flamework/view/flameworkSpecListe",
+                "modifier": "flamework/view/page_spec_ts/flameworkSpecModifier",
+                "form": "flamework/view/page_spec_ts/flameworkSpecInsert"
+            },
+            "moduleName": {
+                "liste": "[classNameMin]-list.module",
+                "modifier": "[classNameMin]-update.module",
+                "form": "[classNameMin]-form.module",
+                "delete": "[classNameMin]-delete.module"
+            },
+            "moduleContent": {
+                "liste": "flamework/view/module_ts/frameworkModuleList",
+                "modifier": "flamework/view/module_ts/frameworkModuleUpdate",
+                "form": "flamework/view/module_ts/frameworkModuleForm",
+                "delete": "flamework/view/module_ts/frameworkModuleDelete"
+            },
+            "routingModuleName": {
+                "liste": "[classNameMin]-list-routing.module",
+                "modifier": "[classNameMin]-update-routing.module",
+                "form": "[classNameMin]-form-routing.module",
+                "delete": "[classNameMin]-delete-routing.module"
+            },
+            "routingModuleContent": {
+                "liste": "flamework/view/routingpage_ts/flameworkRoutingList",
+                "modifier": "flamework/view/routingpage_ts/flameworkRoutingUpdate",
+                "form": "flamework/view/routingpage_ts/flameworkRoutingForm",
+                "delete": "flamework/view/routingpage_ts/flameworkRoutingDelete"
+            },
+            "componentGetDataForeign": "flamework/view/components/flameworkComponentGetDataForeign",
+            "callGetDataForeign": "this.getData[foreignType]s();",
+            "fileExtension": "ts"
         },
         "customChanges":[],
         "navbarLinks":{

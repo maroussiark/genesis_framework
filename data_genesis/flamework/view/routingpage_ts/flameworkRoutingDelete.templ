@@ -1,0 +1,17 @@
+import { NgModule } from '@angular/core';
+import { Routes, RouterModule } from '@angular/router';
+
+import { [classNameMaj]DeletePage } from './[classNameMin]-delete.page';
+
+const routes: Routes = [
+  {
+    path: '',
+    component: [classNameMaj]DeletePage
+  }
+];
+
+@NgModule({
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule],
+})
+export class [classNameMaj]DeletePageRoutingModule {}

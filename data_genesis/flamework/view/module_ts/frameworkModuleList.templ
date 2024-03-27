@@ -1,0 +1,20 @@
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+
+import { IonicModule } from '@ionic/angular';
+
+import { [classNameMaj]ListPageRoutingModule } from './[classNameMin]-list-routing.module';
+
+import { [classNameMaj]ListPage } from './[classNameMin]-list.page';
+
+@NgModule({
+  imports: [
+    CommonModule,
+    FormsModule,
+    IonicModule,
+    [classNameMaj]ListPageRoutingModule
+  ],
+  declarations: [[classNameMaj]ListPage]
+})
+export class [classNameMaj]ListPageModule {}

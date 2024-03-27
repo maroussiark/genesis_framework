@@ -1,0 +1,109 @@
+import { Component, OnInit } from '@angular/core';
+import { [classNameMaj]Service } from '../../services/[classNameMin].service';
+import { ToastController } from '@ionic/angular';
+import { ActivatedRoute, Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
+import { API_CONFIG } from 'src/app/api.config';
+import { Observable } from 'rxjs';
+
+@Component({
+  selector: 'app-[classNameMin]-form',
+  templateUrl: './[classNameMin]-form.page.html',
+})
+export class [classNameMaj]FormPage implements OnInit {
+  [classNameMin]: any;
+  [foreignList]
+  
+
+  [classNameMin]Id : any;
+  [classNameMin]$: Observable<any>  | undefined;
+  updated[classNameMaj]: any = {};
+  
+  formData = {
+    [formData]
+  };
+  constructor(
+    private http: HttpClient,
+    private service:[classNameMaj]Service,
+    private route: ActivatedRoute,
+    private router: Router,
+    private toastController: ToastController) { }
+ 
+  
+  ngOnInit() {
+    this.[classNameMin]Id = this.route.snapshot.params['id'];
+    this.[classNameMin]$ = this.service.getById(this.[classNameMin]Id );
+    this.[classNameMin]$.subscribe(donnees => {
+      this.updated[classNameMaj] = { ...donnees };
+    });
+    [callGetDataForeign]
+  }
+
+  [getDataForeignList]
+
+  navigateTo(lien:string) {
+    this.router.navigate([lien]);
+  }
+    public insert[classNameMaj](){
+    this.service.insert(this.formData)
+      .toPromise()
+      .then(async (response) => {
+        console.log('Registration successful:', response);
+        // Optionally, you can reset the form here
+        this.formData = {
+          [formData]
+        };
+        // Display a toast
+        const toast = await this.toastController.create({
+          message: 'Registration successful',
+          duration: 1000
+        });
+        toast.present();
+      })
+      .catch(async (error) => {
+        console.error('Registration failed:', error);
+        // Display a toast with error message
+        const toast = await this.toastController.create({
+          message: 'Registration failed. Please try again later.',
+          duration: 1000
+        });
+        toast.present();
+      });
+  }
+
+    public getById[classNameMaj]() {
+    this.service.getById(this.[classNameMin]Id).subscribe(
+      (data) => {
+        console.log('[classNameMin]Id:', data);
+        // this.employee$ = data;
+      },
+      (error) => {
+        console.error('Error:', error);
+      }
+    );
+  }
+
+    public update[classNameMaj]() {
+    this.service.update(this.[classNameMin]Id, this.updated[classNameMaj]).toPromise()
+    .then(async (response) => {
+      console.log('Registration successful:', response);
+     
+      // Display a toast
+      const toast = await this.toastController.create({
+        message: 'Modification successful',
+        duration: 1000
+      });
+      toast.present();
+    })
+    .catch(async (error) => {
+      console.error('Modification failed:', error);
+      // Display a toast with error message
+      const toast = await this.toastController.create({
+        message: 'Modification failed. Please try again later.',
+        duration: 1000
+      });
+      toast.present();
+    });
+
+}
+}

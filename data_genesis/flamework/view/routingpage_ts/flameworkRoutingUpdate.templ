@@ -1,0 +1,17 @@
+import { NgModule } from '@angular/core';
+import { Routes, RouterModule } from '@angular/router';
+
+import { [classNameMaj]UpdatePage } from './[classNameMin]-update.page';
+
+const routes: Routes = [
+  {
+    path: '',
+    component: [classNameMaj]UpdatePage
+  }
+];
+
+@NgModule({
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule],
+})
+export class [classNameMaj]UpdatePageRoutingModule {}

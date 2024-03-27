@@ -1,0 +1,16 @@
+  {
+    path: '[classNameMin]-form',
+    loadChildren: () => import('./[classNameMin]/[classNameMin]-form/[classNameMin]-form.module').then( m => m.[classNameMaj]FormPageModule)
+  },
+  {
+    path: '[classNameMin]-list',
+    loadChildren: () => import('./[classNameMin]/[classNameMin]-list/[classNameMin]-list.module').then( m => m.[classNameMaj]ListPageModule)
+  },
+  {
+    path: '[classNameMin]-update',
+    loadChildren: () => import('./[classNameMin]/[classNameMin]-update/[classNameMin]-update.module').then( m => m.[classNameMaj]UpdatePageModule)
+  },
+  {
+    path: '[classNameMin]-update/:id',
+    loadChildren: () => import('./[classNameMin]/[classNameMin]-update/[classNameMin]-update.module').then( m => m.[classNameMaj]UpdatePageModule)
+  }

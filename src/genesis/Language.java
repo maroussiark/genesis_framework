@@ -1,7 +1,9 @@
 package genesis;
 
 import java.io.IOException;
+
 import java.util.HashMap;
+
 import handyman.HandyManUtils;
 
 public class Language {
@@ -15,8 +17,27 @@ public class Language {
     private Model model;
     private Controller controller;
     private View view;
+    private Service service;
+    private ComponentService componentService;
     private CustomChanges[] customChanges;
     private NavbarLink navbarLinks;
+    private String view_directory;
+
+    public ComponentService getComponentService() {
+        return this.componentService;
+    }
+
+    public void setComponentService(ComponentService componentService) {
+        this.componentService = componentService;
+    }
+
+    public String getView_directory() {
+        return this.view_directory;
+    }
+
+    public void setView_directory(String view_directory) {
+        this.view_directory = view_directory;
+    }
 
     public NavbarLink getNavbarLinks() {
         return navbarLinks;
@@ -120,6 +141,14 @@ public class Language {
 
     public void setView(View view) {
         this.view = view;
+    }
+
+    public Service getService() {
+        return this.service;
+    }
+
+    public void setService(Service service) {
+        this.service = service;
     }
 
     public String generateModel(Entity entity, String projectName) throws IOException, Exception {
@@ -362,9 +391,9 @@ public class Language {
         return content;
     }
 
-    public String generateView(Entity entity, String projectName) throws IOException, Exception {
+    public String generateView(Entity entity, String projectName, String template) throws IOException, Exception {
         String content = HandyManUtils.getFileContent(
-                Constantes.DATA_PATH + "/" + getView().getViewContent() + "." + Constantes.VIEW_TEMPLATE_EXT);
+                Constantes.DATA_PATH + "/" + template + "." + Constantes.VIEW_TEMPLATE_EXT);
         String foreignList = "";
         String tableHeader = "";
         String tableLine = "";
@@ -376,8 +405,12 @@ public class Language {
             tableHeader = tableHeader.replace("[fieldNameFormattedMaj]", HandyManUtils.formatReadable(ef.getName()));
             tableHeader = tableHeader.replace("[fieldNameMaj]", HandyManUtils.majStart(ef.getName()));
             tableHeader = tableHeader.replace("[fieldNameMin]", HandyManUtils.minStart(ef.getName()));
-            tableLine += getView().getViewTableLine();
-            tableLine = tableLine.replace("[fieldNameMaj]", HandyManUtils.majStart(ef.getName()));
+            if (ef.isForeign() == false) {
+                tableLine += getView().getViewTableLine();
+            } else {
+                tableLine += getView().getViewTableLineForeign();
+                tableLine = tableLine.replace("[foreignFieldGet]", getView().getForeignFieldGet());
+            }
             tableLine = tableLine.replace("[fieldNameMin]", HandyManUtils.minStart(ef.getName()));
             if (ef.isPrimary()) {
                 tableLine = tableLine.replace("[foreignFieldGet]", foreignGet);
@@ -399,6 +432,7 @@ public class Language {
             }
             updateForm += HandyManUtils.getFileContent(Constantes.DATA_PATH + "/"
                     + getView().getViewUpdateFormForeignField() + "." + Constantes.VIEW_TEMPLATE_EXT);
+            updateForm = updateForm.replace("[foreignFieldGet]", getView().getForeignFieldGet());
             updateForm = updateForm.replace("[foreignType]", ef.getType());
             updateForm = updateForm.replace("[foreignNameMin]", HandyManUtils.minStart(ef.getName()));
             updateForm = updateForm.replace("[foreignNameMaj]", HandyManUtils.majStart(ef.getName()));
@@ -409,6 +443,7 @@ public class Language {
             updateForm = updateForm.replace("[foreignNameFormattedMaj]", HandyManUtils.formatReadable(ef.getName()));
             insertForm += HandyManUtils.getFileContent(Constantes.DATA_PATH + "/"
                     + getView().getViewInsertFormForeignField() + "." + Constantes.VIEW_TEMPLATE_EXT);
+            insertForm = insertForm.replace("[foreignFieldGet]", getView().getForeignFieldGet());
             insertForm = insertForm.replace("[foreignType]", ef.getType());
             insertForm = insertForm.replace("[foreignNameMin]", HandyManUtils.minStart(ef.getName()));
             insertForm = insertForm.replace("[foreignNameMaj]", HandyManUtils.majStart(ef.getName()));
@@ -429,6 +464,67 @@ public class Language {
         content = content.replace("[viewTableLine]", tableLine);
         content = content.replace("[viewUpdateFormField]", updateForm);
         content = content.replace("[viewInsertFormField]", insertForm);
+        content = content.replace("[projectNameMin]", HandyManUtils.minStart(projectName));
+        content = content.replace("[projectNameMaj]", HandyManUtils.majStart(projectName));
+        content = content.replace("[classNameMaj]", HandyManUtils.majStart(entity.getClassName()));
+        content = content.replace("[classNameMin]", HandyManUtils.minStart(entity.getClassName()));
+        content = content.replace("[primaryNameMaj]", HandyManUtils.majStart(entity.getPrimaryField().getName()));
+        content = content.replace("[primaryNameMin]", HandyManUtils.minStart(entity.getPrimaryField().getName()));
+        return content;
+    }
+
+    public String generateService(Entity entity) throws Exception {
+        String content = HandyManUtils.getFileContent(
+                Constantes.DATA_PATH + "/" + getService().getServiceContent());
+        content = content.replace("[classNameMaj]", HandyManUtils.majStart(entity.getClassName()));
+        content = content.replace("[classNameMin]", HandyManUtils.minStart(entity.getClassName()));
+
+        return content;
+    }
+
+    public String generateServicespec(Entity entity) throws Exception {
+        String content = HandyManUtils.getFileContent(
+                Constantes.DATA_PATH + "/" + getService().getSpecContent());
+        content = content.replace("[classNameMaj]", HandyManUtils.majStart(entity.getClassName()));
+        content = content.replace("[classNameMin]", HandyManUtils.minStart(entity.getClassName()));
+
+        return content;
+    }
+
+    public String generateComponentService(Entity entity, String projectName, String template)
+            throws IOException, Exception {
+        String content = HandyManUtils.getFileContent(
+                Constantes.DATA_PATH + "/" + template + ".templ");
+        String formData = "";
+        String formDataUpdate = "";
+        String foreignList = "";
+        String getDataForeignList = "";
+        String callGetDataForeign = "";
+
+        for (EntityField ef : entity.getFields()) {
+            formData += this.getComponentService().getFormData() + "\n";
+            formDataUpdate += this.getComponentService().getFormDataUpdate() + "\n";
+            formData = formData.replace("[fieldNameMin]", HandyManUtils.minStart(ef.getName()))
+                    .replace("[classNameMin]", HandyManUtils.minStart(entity.getClassName()));
+            formDataUpdate = formDataUpdate.replace("[fieldNameMin]", HandyManUtils.minStart(ef.getName()))
+                    .replace("[classNameMin]", HandyManUtils.minStart(entity.getClassName()));
+            if (ef.isForeign()) {
+                foreignList += this.getComponentService().getForeignList() + "\n";
+                foreignList = foreignList.replace("[foreignNameMin]", HandyManUtils.minStart(ef.getName()));
+                getDataForeignList += HandyManUtils.getFileContent(
+                        Constantes.DATA_PATH + "/" + this.getComponentService().getComponentGetDataForeign() + ".templ")
+                        + "\n";
+                getDataForeignList = getDataForeignList.replace("[foreignType]", ef.getType())
+                        .replace("[foreignTypeMin]", HandyManUtils.minStart(ef.getType()));
+                callGetDataForeign += this.getComponentService().getCallGetDataForeign() + "\n";
+                callGetDataForeign = callGetDataForeign.replace("[foreignType]", ef.getType());
+            }
+        }
+        content = content.replace("[callGetDataForeign]", callGetDataForeign);
+        content = content.replace("[getDataForeignList]", getDataForeignList);
+        content = content.replace("[foreignList]", foreignList);
+        content = content.replace("[formData]", formData);
+        content = content.replace("[formDataUpdate]", formDataUpdate);
         content = content.replace("[projectNameMin]", HandyManUtils.minStart(projectName));
         content = content.replace("[projectNameMaj]", HandyManUtils.majStart(projectName));
         content = content.replace("[classNameMaj]", HandyManUtils.majStart(entity.getClassName()));

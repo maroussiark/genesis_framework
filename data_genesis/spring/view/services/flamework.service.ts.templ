@@ -1,0 +1,81 @@
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { catchError, throwError } from 'rxjs'; 
+import { API_CONFIG } from '../api.config';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class [classNameMaj]Service {
+
+  constructor(private http:HttpClient) {}
+
+  // INSERT
+  public insert([classNameMin] : any ){ 
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json'
+    });
+    console.log('Submitted Data:', [classNameMin])
+    return this.http.post(API_CONFIG.apiUrl + '/[classNameMin]' ,[classNameMin], { headers: headers })
+  }
+
+    
+  // SELECT BY ID
+  public getById(id : any){
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json'
+    });
+    console.log('Submitted Data:')
+    return this.http.get(API_CONFIG.apiUrl + '/[classNameMin]/' + id, { headers: headers })
+  }
+
+    // Get the employee
+    public get[classNameMaj]s(){
+      return this.http.get<any[]>(API_CONFIG.apiUrl + '/[classNameMin]').pipe(
+        catchError(error => {
+          console.error('Error:', error);
+          return throwError(error);
+        })
+      );
+    }
+  
+    // Get the [classNameMin] by id
+    public get[classNameMaj]ById(id : any){
+      let url = API_CONFIG.apiUrl + '/[classNameMin]' + id;
+      console.log('url: ', url);
+      return this.http.get(url).pipe(
+        catchError(error => {
+          console.error('Error:', error);
+          return throwError(error);
+        })
+      );
+    }
+
+  // SELECT ALL
+  public getAll(){
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json'
+    });
+    console.log('Submitted Data:')
+    return this.http.get(API_CONFIG.apiUrl + '/[classNameMin]', { headers: headers })
+  }
+
+  // DELETE
+  public delete(id : any ){
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json'
+    });
+    console.log('Delete Data id:', id)
+    //CONCATENATION DU id SUR LE LIEN POUR RECONNAIRE l'id a supprimer
+    return this.http.delete(API_CONFIG.apiUrl + '/[classNameMin]/'+id, { headers: headers })
+  }
+  
+  //UPDATE
+  public update(id : any,[classNameMin] : any ){
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json'
+    });
+    console.log('Updated Data:', [classNameMin])
+    return this.http.post(API_CONFIG.apiUrl + '/[classNameMin]/'+id,[classNameMin], { headers: headers })
+  }
+}

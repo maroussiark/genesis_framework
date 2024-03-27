@@ -1,0 +1,17 @@
+import { NgModule } from '@angular/core';
+import { Routes, RouterModule } from '@angular/router';
+
+import { [classNameMaj]FormPage } from './[classNameMin]-form.page';
+
+const routes: Routes = [
+  {
+    path: '',
+    component: [classNameMaj]FormPage
+  }
+];
+
+@NgModule({
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule],
+})
+export class [classNameMaj]FormPageRoutingModule {}

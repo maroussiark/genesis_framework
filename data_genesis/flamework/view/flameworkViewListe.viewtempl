@@ -1,0 +1,30 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>[classNameMin]-list</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">[classNameMin]-list</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-grid>
+    <ion-row>
+      [viewTableHeader]
+      Action
+    </ion-row>
+    <ion-row *ngFor="let [classNameMin] of [classNameMin]s">
+      [viewTableLine]
+      <td class="text-center">
+        <ion-button (click)="update([classNameMin]?.[primaryNameMin])" size="small">Update</ion-button>
+      </td>
+      <td class="text-center">
+        <ion-button (click)="delete[classNameMaj]([classNameMin]?.[primaryNameMin])" size="small">Delete</ion-button>
+      </td>
+    </ion-row>
+  </ion-grid>
+
+</ion-content>

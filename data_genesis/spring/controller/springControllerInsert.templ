@@ -1,3 +1,4 @@
-public ResponseWrap<[classNameMaj]> insert([controllerMethodParameter]){
-    return ResponseWrap.success(repo.save(obj));
+public ResponseEntity<[classNameMaj]> insert([controllerMethodParameter]){
+    obj = repo.save(obj);
+    return new ResponseEntity<>(obj,HttpStatus.CREATED);
 }
