@@ -12,7 +12,6 @@
     <ion-card-content>
         <form (ngSubmit)="insert[classNameMaj]()" #myForm="ngForm">
             [viewInsertFormField]
-            <ion-input type="hidden" [(ngModel)]="formData.[primaryNameMin]" name="[primaryNameMin]"></ion-input>
             <div class="mb-3">
                 <ion-button type="submit">Valider</ion-button>
             </div>

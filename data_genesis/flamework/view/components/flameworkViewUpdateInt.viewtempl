@@ -1,5 +1,5 @@
 <ion-item>
     <ion-label for="[fieldNameMin]">[fieldNameFormattedMaj]
     </ion-label> 
-    <ion-input cFormControl step="1" id="[fieldNameMin]" type="number" [(ngModel)]="formData.[fieldNameMin]" name="[fieldNameMin]"></ion-input> 
+    <ion-input cFormControl step="1" id="[fieldNameMin]" type="number" [(ngModel)]="updated[classNameMaj].[fieldNameMin]" name="[fieldNameMin]"></ion-input> 
 </ion-item>

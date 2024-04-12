@@ -16,7 +16,7 @@
     <ion-list>
         <form (ngSubmit)="update[classNameMaj]()" #myForm="ngForm">
             [viewUpdateFormField]
-            <ion-input type="hidden" [(ngModel)]="formData.[primaryNameMin]" name="[primaryNameMin]"></ion-input>
+            <ion-input type="hidden" [(ngModel)]="updated[classNameMaj].[primaryNameMin]" name="[primaryNameMin]"></ion-input>
             
             <ion-button expand="full" type="submit">Valider</ion-button>
             

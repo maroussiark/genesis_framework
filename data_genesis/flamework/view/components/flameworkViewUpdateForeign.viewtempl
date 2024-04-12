@@ -1,5 +1,5 @@
 <ion-item>
-    <ion-select placeholder="Sélectionner un choix" cFormControl id="[fieldNameMin]" name="[fieldNameMin]" [(ngModel)]="formData.[fieldNameMin]">
+    <ion-select placeholder="Sélectionner un choix" cFormControl id="[fieldNameMin]" name="[fieldNameMin]" [(ngModel)]="updated[classNameMaj].[fieldNameMin]">
         <ion-select-option *ngFor="let [foreignNameMin] of [foreignNameMin]s"  [ngValue]="[foreignNameMin]">{{ [foreignNameMin].[foreignFieldGet] }}
         </ion-select-option>
     </ion-select> 

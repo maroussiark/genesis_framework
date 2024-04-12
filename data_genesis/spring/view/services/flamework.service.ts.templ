@@ -76,6 +76,6 @@ export class [classNameMaj]Service {
       'Content-Type': 'application/json'
     });
     console.log('Updated Data:', [classNameMin])
-    return this.http.post(API_CONFIG.apiUrl + '/[classNameMin]/'+id,[classNameMin], { headers: headers })
+    return this.http.put(API_CONFIG.apiUrl + '/[classNameMin]/'+id,[classNameMin], { headers: headers })
   }
 }

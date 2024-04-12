@@ -2,7 +2,7 @@
     <ion-label for="[fieldNameMin]">[fieldNameFormattedMaj]
     </ion-label> 
     <ion-input
-      placeholder="Sélectionner une date" cFormControl id="[fieldNameMin]" [(ngModel)]="formData.[fieldNameMin]" name="[fieldNameMin]"> 
+      placeholder="Sélectionner une date" cFormControl id="[fieldNameMin]" [(ngModel)]="updated[classNameMaj].[fieldNameMin]" name="[fieldNameMin]"> 
       type="date"
     </ion-input>
 </ion-item> 
